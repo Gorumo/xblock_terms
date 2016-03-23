@@ -20,6 +20,10 @@ class TermsXBlock(XBlock):
         default=0, scope=Scope.user_state,
         help="A simple 222, to show something happening",
     )
+    next_one = Integer(
+        default=0, scope=Scope.user_state,
+        help="shows next nuber",
+    )
 
     def resource_string(self, path):
         """Handy helper for getting resources from our kit."""
@@ -51,6 +55,8 @@ class TermsXBlock(XBlock):
 
         self.count += 1
         return {"count": self.count}
+        self.next_one = self.count + 1
+        return {"next_one": self.next_one}
 
     # TO-DO: change this to create the scenarios you'd like to see in the
     # workbench while developing your XBlock.

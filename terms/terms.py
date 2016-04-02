@@ -1,17 +1,18 @@
 """TO-DO: Write a description of what this XBlock is."""
-
+import json
 import pkg_resources
 
 from xblock.core import XBlock
-from xblock.fields import Scope, Integer
+from xblock.fields import Scope, Integer, String
 from xblock.fragment import Fragment
+
+
 
 
 class TermsXBlock(XBlock):
     """
     TO-DO: document what your XBlock does.
     """
-
     # Fields are defined on the class.  You can access them in your code as
     # self.<fieldname>.
 
@@ -23,9 +24,16 @@ class TermsXBlock(XBlock):
     next_one = Integer(
         default=0, scope=Scope.user_state,
         help="shows next nuber",
+    )     
+
+    arr = []
+
+    exampleList = String(
+        default=0, scope=Scope.user_state,
+        help="shows next nuber",
     )
 
-    def resource_string(self, path):
+    def resource_string(self, path): 
         """Handy helper for getting resources from our kit."""
         data = pkg_resources.resource_string(__name__, path)
         return data.decode("utf8")
@@ -36,6 +44,7 @@ class TermsXBlock(XBlock):
         The primary view of the TermsXBlock, shown to students
         when viewing courses.
         """
+
         html = self.resource_string("static/html/terms.html")
         frag = Fragment(html.format(self=self))
         frag.add_css(self.resource_string("static/css/terms.css"))
@@ -50,13 +59,19 @@ class TermsXBlock(XBlock):
         """
         An example handler, which increments the data.
         """
-        # Just to show data coming in...
         assert data['hello'] == 'world'
-
         self.count += 1
         return {"count": self.count}
-        self.next_one = self.count + 1
-        return {"next_one": self.next_one}
+
+    @XBlock.json_handler
+    def updateList(self, data, suffix=''):
+
+        if self.exampleList != 0:
+            self.arr = json.loads(self.exampleList)
+        self.arr.append(data.get('term'))
+        self.exampleList = json.dumps(self.arr)
+
+        return {"next_one" : self.exampleList}
 
     # TO-DO: change this to create the scenarios you'd like to see in the
     # workbench while developing your XBlock.

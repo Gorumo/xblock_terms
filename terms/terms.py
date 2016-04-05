@@ -16,17 +16,9 @@ class TermsXBlock(XBlock):
     # Fields are defined on the class.  You can access them in your code as
     # self.<fieldname>.
 
-    # TO-DO: delete count, and define your own fields.
-    count = Integer(
-        default=0, scope=Scope.user_state,
-        help="A simple 222, to show something happening",
-    )
-    next_one = Integer(
-        default=0, scope=Scope.user_state,
-        help="shows next nuber",
-    )     
+    # TO-DO: delete count, and define your own fields.   
 
-    arr = []
+    arr = {}
 
     exampleList = String(
         default=0, scope=Scope.user_state,
@@ -55,23 +47,13 @@ class TermsXBlock(XBlock):
     # TO-DO: change this handler to perform your own actions.  You may need more
     # than one handler, or you may not need any handlers at all.
     @XBlock.json_handler
-    def increment_count(self, data, suffix=''):
-        """
-        An example handler, which increments the data.
-        """
-        assert data['hello'] == 'world'
-        self.count += 1
-        return {"count": self.count}
-
-    @XBlock.json_handler
-    def updateList(self, data, suffix=''):
-
+    def termsListCheck(self, data, suffix=''):
         if self.exampleList != 0:
             self.arr = json.loads(self.exampleList)
         self.arr.append(data.get('term'))
         self.exampleList = json.dumps(self.arr)
 
-        return {"next_one" : self.exampleList}
+        return {"exampleList" : self.exampleList}
 
     # TO-DO: change this to create the scenarios you'd like to see in the
     # workbench while developing your XBlock.

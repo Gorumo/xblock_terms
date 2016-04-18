@@ -1,4 +1,4 @@
-/* Javascript for TermsXBlock. */
+/* Javascript for TermsXBlock. ghghgh*/
 function TermsXBlock(runtime, element) {
 
     function updateCount(result) {

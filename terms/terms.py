@@ -18,10 +18,15 @@ class TermsXBlock(XBlock):
 
     # TO-DO: delete count, and define your own fields.   
 
-    arr = {}
+    arr = []
 
     exampleList = String(
         default=0, scope=Scope.user_state,
+        help="shows next nuber",
+    )
+
+    conceptsSet = String(
+        default=0, scope=Scope.user_state_summary,
         help="shows next nuber",
     )
 
@@ -48,12 +53,14 @@ class TermsXBlock(XBlock):
     # than one handler, or you may not need any handlers at all.
     @XBlock.json_handler
     def termsListCheck(self, data, suffix=''):
-        if self.exampleList != 0:
-            self.arr = json.loads(self.exampleList)
+        if self.conceptsSet != 0:
+            self.arr = json.loads(self.conceptsSet)
         self.arr.append(data.get('term'))
-        self.exampleList = json.dumps(self.arr)
 
-        return {"exampleList" : self.exampleList}
+        self.conceptsSet = json.dumps(self.arr)
+        self.exampleList = self.conceptsSet
+
+        return {"exampleList" : self.exampleList, "conceptsSet" : self.conceptsSet}
 
     # TO-DO: change this to create the scenarios you'd like to see in the
     # workbench while developing your XBlock.

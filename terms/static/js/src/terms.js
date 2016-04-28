@@ -1,9 +1,10 @@
-/* Javascript for TermsXBlock. ghghgh*/
+/* Javascript for TermsXBlock. */
 function TermsXBlock(runtime, element) {
 
     function updateCount(result) {
         //Получили count и next_one из скрипта-обработчика increment_count
         $('.exampleListOfTerms', element).text(result.exampleList);
+        $('.bigDataSet', element).text(result.conceptsSet);
     }
 
     var handlerUrl = runtime.handlerUrl(element, 'termsListCheck'); //increment_ount - привязываем данный "элемент" к скрипту increment_count и генерируем URL

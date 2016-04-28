@@ -58,7 +58,7 @@ class TermsXBlock(XBlock):
         self.arr.append(data.get('term'))
 
         self.conceptsSet = json.dumps(self.arr)
-        self.exampleList = self.conceptsSet
+        self.exampleList = json.dumps(self.arr)
 
         return {"exampleList" : self.exampleList, "conceptsSet" : self.conceptsSet}
 

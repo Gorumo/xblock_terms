@@ -7,7 +7,7 @@ function TermsXBlock(runtime, element) {
     }
 
     var handlerUrl = runtime.handlerUrl(element, 'termsListCheck'); //increment_ount - привязываем данный "элемент" к скрипту increment_count и генерируем URL
-    var handler2 = runtime.handler2(element, 'delel');
+    var handler2 = runtime.handler2(element, 'aad');
     $('.halo', element).click(function(eventObject) {
         $.ajax({
             type: "POST",
@@ -16,7 +16,7 @@ function TermsXBlock(runtime, element) {
             success: updateList //Вызов функции updateList(result) при успехе, где result - объект, который мы передали из (П) функции increment_count
         });
     });
-  $('.delete', element).click(function(eventObject) {
+  $('.ad', element).click(function(eventObject) {
         $.ajax({
             type: "POST",
             url: handler2,

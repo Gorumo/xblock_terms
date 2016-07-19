@@ -25,7 +25,7 @@ class TermsXBlock(XBlock):
         help="shows next nuber",
     )
 
-     def resource_string(self, path): 
+    def resource_string(self, path): 
         """Handy helper for getting resources from our kit."""
         data = pkg_resources.resource_string(__name__, path)
         return data.decode("utf8")

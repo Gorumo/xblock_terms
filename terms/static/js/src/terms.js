@@ -21,7 +21,8 @@ function TermsXBlock(runtime, element) {
      var handlerUrl = runtime.handlerUrl(element, 'aad');
         $.ajax({
             type: "POST",
-            url: handler2,
+            url: handlerUrl,
+            data: JSON.stringify({"term": document.getElementById("term").value}),
             success: updateList //Вызов функции updateList(result) при успехе, где result - объект, который мы передали из (П) функции increment_count
         });
     });

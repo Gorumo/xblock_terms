@@ -16,7 +16,15 @@ function TermsXBlock(runtime, element) {
             success: updateList //Вызов функции updateList(result) при успехе, где result - объект, который мы передали из (П) функции increment_count
         });
     });
-
+  $('.Delete', element).click(function(eventObject) {
+    delete self.exampleList[0]
+        $.ajax({
+            type: "POST",
+            url: handlerUrl,
+            data: JSON.stringify({"term": document.getElementById("term").value}), //Запечатываем массив (hello => "world" и hello2 => "check")
+            success: updateList //Вызов функции updateList(result) при успехе, где result - объект, который мы передали из (П) функции increment_count
+        });
+    });
     $(function ($) {
         //Тут действия при загрузке страницы
     });

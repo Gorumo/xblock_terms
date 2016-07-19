@@ -47,14 +47,6 @@ class TermsXBlock(XBlock):
     # TO-DO: change this handler to perform your own actions.  You may need more
     # than one handler, or you may not need any handlers at all.
     @XBlock.json_handler
-    '''def termsListCheck(self, data, suffix=''):
-        if self.exampleList != 0:
-            self.arr = json.loads(self.exampleList)
-        self.arr.append(data.get('term'))
-        self.exampleList = json.dumps(self.arr)
-
-        return {"exampleList" : self.exampleList}'''
-	
     def aad(self, data, suffix=''):
         if self.exampleList != 0:
             self.arr = json.loads(self.exampleList)

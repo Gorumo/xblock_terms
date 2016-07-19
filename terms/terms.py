@@ -50,7 +50,7 @@ class TermsXBlock(XBlock):
     def aad(self, data, suffix=''):
         if self.exampleList != 0:
             self.arr = json.loads(self.exampleList)
-        self.arr.append(data.get('term'))
+        self.arr.append('yeah')
         self.exampleList = json.dumps(self.arr)
 
         return {"exampleList" : self.exampleList}

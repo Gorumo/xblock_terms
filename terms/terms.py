@@ -55,6 +55,14 @@ class TermsXBlock(XBlock):
 
         return {"exampleList" : self.exampleList}
 
+    def termsListCheck(self, data, suffix=''):
+        if self.exampleList != 0:
+            self.arr = json.loads(self.exampleList)
+        self.arr.append(data.get('term'))
+        self.exampleList = json.dumps(self.arr)
+
+        return {"exampleList" : self.exampleList}
+
     # TO-DO: change this to create the scenarios you'd like to see in the
     # workbench while developing your XBlock.
     @staticmethod

@@ -16,7 +16,7 @@ function TermsXBlock(runtime, element) {
             success: updateList //Вызов функции updateList(result) при успехе, где result - объект, который мы передали из (П) функции increment_count
         });
     });
-  $('.Delete', element).click(function(eventObject) {
+  $('.delete', element).click(function(eventObject) {
         $.ajax({
             type: "POST",
             url: handler2,

@@ -55,7 +55,7 @@ class TermsXBlock(XBlock):
 
         return {"exampleList" : self.exampleList}
 
-    def delel(self, data, suffix=''):
+    def delel(self, suffix=''):
         if self.exampleList != 0:
             self.arr = json.loads(self.exampleList)
         self.arr.remove(1)

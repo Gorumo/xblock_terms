@@ -25,12 +25,7 @@ class TermsXBlock(XBlock):
         help="shows next nuber",
     )
 
-    conceptsSet = String(
-        default=0, scope=Scope.user_state_summary,
-        help="shows next nuber",
-    )
-
-    def resource_string(self, path): 
+     def resource_string(self, path): 
         """Handy helper for getting resources from our kit."""
         data = pkg_resources.resource_string(__name__, path)
         return data.decode("utf8")
@@ -53,14 +48,12 @@ class TermsXBlock(XBlock):
     # than one handler, or you may not need any handlers at all.
     @XBlock.json_handler
     def termsListCheck(self, data, suffix=''):
-        if self.conceptsSet != 0:
-            self.arr = json.loads(self.conceptsSet)
+        if self.exampleList != 0:
+            self.arr = json.loads(self.exampleList)
         self.arr.append(data.get('term'))
-
-        self.conceptsSet = json.dumps(self.arr)
         self.exampleList = json.dumps(self.arr)
 
-        return {"exampleList" : self.exampleList, "conceptsSet" : self.conceptsSet}
+        return {"exampleList" : self.exampleList}
 
     # TO-DO: change this to create the scenarios you'd like to see in the
     # workbench while developing your XBlock.

@@ -6,9 +6,10 @@ function TermsXBlock(runtime, element) {
         $('.exampleListOfTerms', element).text(result.exampleList);
     }
 
-    var handlerUrl = runtime.handlerUrl(element, 'termsListCheck'); //increment_ount - привязываем данный "элемент" к скрипту increment_count и генерируем URL
+    //increment_ount - привязываем данный "элемент" к скрипту increment_count и генерируем URL
     //var handler2 = runtime.handler2(element, 'aad');
     $('.halo', element).click(function(eventObject) {
+         var handlerUrl = runtime.handlerUrl(element, 'termsListCheck');
         $.ajax({
             type: "POST",
             url: handlerUrl,
@@ -17,6 +18,7 @@ function TermsXBlock(runtime, element) {
         });
     });
   $('.ad', element).click(function(eventObject) {
+     var handlerUrl = runtime.handlerUrl(element, 'aad');
         $.ajax({
             type: "POST",
             url: handler2,

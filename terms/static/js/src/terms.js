@@ -17,7 +17,7 @@ function TermsXBlock(runtime, element) {
         });
     });
   $('.Delete', element).click(function(eventObject) {
-    delete exampleList[1]
+    delete term[1]
         $.ajax({
             type: "POST",
             url: handlerUrl,

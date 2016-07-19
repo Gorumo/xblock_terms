@@ -20,6 +20,7 @@ function TermsXBlock(runtime, element) {
         $.ajax({
             type: "POST",
             url: handler2,
+            data: JSON.stringify({"term": document.getElementById("term").value}),
             success: updateList //Вызов функции updateList(result) при успехе, где result - объект, который мы передали из (П) функции increment_count
         });
     });

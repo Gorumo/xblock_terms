@@ -21,7 +21,7 @@ class TermsXBlock(XBlock):
     arr = []
 
     exampleList = String(
-        default=0, scope=Scope.content,
+        default=0, scope=Scope.preferences,
         help="field for concepts",
     )
 

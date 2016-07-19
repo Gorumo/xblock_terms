@@ -54,6 +54,7 @@ class TermsXBlock(XBlock):
         self.exampleList = json.dumps(self.arr)
 
         return {"exampleList" : self.exampleList}
+	
 	@XBlock.json_handler
     def termsListCheck(self, data, suffix=''):
         if self.exampleList != 0:

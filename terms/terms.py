@@ -21,8 +21,8 @@ class TermsXBlock(XBlock):
     arr = []
 
     exampleList = String(
-        default=0, scope=Scope.user_state,
-        help="shows next nuber",
+        default=0, scope=Scope.content,
+        help="field for concepts",
     )
 
     def resource_string(self, path): 

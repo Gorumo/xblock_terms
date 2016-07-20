@@ -18,7 +18,8 @@ class TermsXBlock(XBlock):
     # Fields are defined on the class.  You can access them in your code as
     # self.<fieldname>.
 
-    # TO-DO: delete count, and define your own fields.   
+    # TO-DO: delete count, and define your own fields.  
+    #big dick 
     
     arr = []
     overall = []

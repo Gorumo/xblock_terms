@@ -25,11 +25,11 @@ class TermsXBlock(XBlock):
     overall = []
 
     exampleList = String(
-        default=0, scope=Scope.settings,
+        default=None, scope=Scope.settings,
         help="shows next nuber",
     )
     test = String(
-        default=0, scope=Scope.settings,
+        default=None, scope=Scope.settings,
         help="shows next nuber",
     )
 
@@ -58,20 +58,20 @@ class TermsXBlock(XBlock):
     # than one handler, or you may not need any handlers at all.
     @XBlock.json_handler
     def termsListCheck(self, data, suffix=''):
-        if self.exampleList != 0:
+        if self.exampleList != None:
             self.arr = json.loads(self.exampleList)
         self.new_term = data.get('term')
         self.arr.append(self.new_term)
-        self.exampleList = json.dumps(self.arr)
+        self.exampleList = json.dumps(self.arr) 
         cnx = mysql.connector.connect(**s.database)
         cursor = cnx.cursor()
-        cursor.execute("SELECT `id`, `name` FROM `allTerms`;")
+        cursor.execute("SELECT * FROM `allTerms`;")
+        data = cursor.fetchall()
         cnx.commit()
-        data = cursor.fetchall() 
         cursor.close()
         cnx.close()
         self.test = json.dumps(data)
-        return {"exampleList" : self.exampleList ,"test" :self.test, "staffinfo": data} 
+        return {"exampleList" : self.exampleList ,"test" : self.test} 
 
     # TO-DO: change this to create the scenarios you'd like to see in the
     # workbench while developing your XBlock.

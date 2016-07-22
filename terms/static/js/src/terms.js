@@ -4,6 +4,7 @@ function TermsXBlock(runtime, element) {
     function updateCount(result) {
         //Функция, которая берет из поля для ввода текстовую информацию и запихивает в массив exampleList
         $('.exampleListOfTerms', element).text(result.exampleList);
+        $('.thisIsTest', element).text(result.test);
     }
 
     var handlerUrl = runtime.handlerUrl(element, 'termsListCheck'); //increment_ount - привязываем данный "элемент" к скрипту increment_count и генерируем URL

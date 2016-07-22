@@ -66,11 +66,11 @@ class TermsXBlock(XBlock):
         cnx = mysql.connector.connect(**s.database)
         cursor = cnx.cursor()
         cursor.execute("select id from allTerms where term = '123'")
-        data = cursor.fetchall() # ksdjfklajdslkf
+        data = cursor.fetchall() 
         cnx.commit()
         cursor.close()
         cnx.close()
-        self.test = json.dumps(data)
+        self.test = json.dumps(data[1])
         return {"exampleList" : self.exampleList ,"test" :self.test} 
 
     # TO-DO: change this to create the scenarios you'd like to see in the

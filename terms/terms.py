@@ -66,7 +66,7 @@ class TermsXBlock(XBlock):
         cnx = mysql.connector.connect(**s.database)
         cursor = cnx.cursor()
         cursor.execute("select id from allTerms where term = '123'")
-        data = cursor.fetchall()
+        data = cursor.fetchall() # ksdjfklajdslkf
         cnx.commit()
         cursor.close()
         cnx.close()

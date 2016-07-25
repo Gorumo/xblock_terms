@@ -25,11 +25,11 @@ class TermsXBlock(XBlock):
     overall = []
 
     exampleList = String(
-        default=0, scope=Scope.settings,
+        default=None, scope=Scope.settings,
         help="shows next nuber",
     )
     test = String(
-        default=0, scope=Scope.settings,
+        default=None, scope=Scope.settings,
         help="shows next nuber",
     )
 
@@ -58,23 +58,43 @@ class TermsXBlock(XBlock):
     # than one handler, or you may not need any handlers at all.
     @XBlock.json_handler
     def termsListCheck(self, data, suffix=''):
-        if self.exampleList != 0:
+        if self.exampleList != None:
             self.arr = json.loads(self.exampleList)
+
         self.new_term = data.get('term')
-        self.arr.append(self.new_term)
-        self.exampleList = json.dumps(self.arr)
+        self.new_id = data.get('id')
+
         cnx = mysql.connector.connect(**s.database)
         cursor = cnx.cursor()
-        cursor.execute("SELECT `id`, `name` FROM `allTerms`;")
+
+        cursor.execute("SELECT `id` FROM `allTerms` WHERE `name` = "+self.new_term+";")
+        if cursor.rowcount == 0:
+            cursor.execute("INSERT INTO `allTerms` (`id`, `name`, `term`) VALUES (NULL, '"+self.new_term+"', 'test');")
+            cnx.commit()
+            cursor.execute("SELECT `id` FROM `allTerms` WHERE `name` = '"+self.new_term+"';")  
+            data = cursor.fetchall()
+            cursor.execute("INSERT INTO `relations` (`id`, `block`, `term`) VALUES (NULL, "+self.new_id+", "+self.data[0][0]+");")
+            cnx.commit()
+        else:
+            cursor.execute("SELECT `id` FROM `allTerms` WHERE `name` = '"+self.new_term+"';")  
+            data = cursor.fetchall()
+            cursor.execute("SELECT `id` FROM `relations` WHERE `term` = "+data[0][0]+" AND `block` = '"+self.new_id+"';")
+            if cursor.rowcount != 0:
+                cursor.execute("INSERT INTO `relations` (`id`, `block`, `term`) VALUES (NULL, "+self.new_id+", "+self.data[0][0]+");")
+                cnx.commit()
+        cursor.execute("SELECT `id` FROM `allTerms` WHERE `name` = '"+self.new_term+"';")
+        data = cursor.fetchall()
+        self.exampleList = json.dumps(data)
+        cursor.execute("SELECT `id` FROM `allTerms` WHERE `name` = '"+self.new_term+"';")
+        data = cursor.fetchall()
+        self.test = json.dumps(data)
         cnx.commit()
-        data = cursor.fetchall() 
         cursor.close()
         cnx.close()
-        self.test = json.dumps(data)
-        return {"exampleList" : self.exampleList ,"test" :self.test, "staffinfo": data} 
+        return {"exampleList" : self.exampleList ,"test" : self.test} 
 
     # TO-DO: change this to create the scenarios you'd like to see in the
-    # workbench while developing your XBlock.
+    # workbench while developing your XBlock. 
     @staticmethod
     def workbench_scenarios():
         """A canned scenario for display in the workbench."""

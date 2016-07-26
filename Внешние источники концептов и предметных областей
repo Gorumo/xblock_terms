@@ -15,3 +15,14 @@ WHERE
 	?item wdt:P279 wd:Q246672 . 
 	SERVICE wikibase:label { bd:serviceParam wikibase:language "en" }
 }
+
+
+Запрос на все концепты и фильтр!
+SELECT DISTINCT ?item ?itemLabel
+WHERE
+{
+	?item wdt:P279* wd:Q246672 .
+  	?item rdfs:label ?itemLabel
+  	FILTER regex(?itemLabel, "^m", "i")
+	SERVICE wikibase:label { bd:serviceParam wikibase:language "en" }	
+}

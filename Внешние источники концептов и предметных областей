@@ -1,0 +1,17 @@
+***********Wikidata.org****************
+Описание математического концепта
+https://www.wikidata.org/wiki/Q43260
+
+Сама категория математического концепта
+https://www.wikidata.org/wiki/Q24034552
+
+Предметная область 
+https://www.wikidata.org/wiki/Q395
+
+Запрос на все "Mathematical objects"
+SELECT ?item ?itemLabel
+WHERE
+{
+	?item wdt:P279 wd:Q246672 . 
+	SERVICE wikibase:label { bd:serviceParam wikibase:language "en" }
+}

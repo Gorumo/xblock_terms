@@ -33,11 +33,8 @@ function TermsXBlock(runtime, element) {
             }
         });
     }        
-	});        
-
-
-	
-
+	});
+    
     $('.halo', element).click(function(eventObject) {
         $.ajax({
             type: "POST",

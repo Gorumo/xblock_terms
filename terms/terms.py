@@ -58,7 +58,11 @@ class TermsXBlock(XBlock):
     # than one handler, or you may not need any handlers at all. json.dumps
     @XBlock.json_handler
     def getTerms(self, data, suffix=''):
-	    arr = [{"id":12,"phrase":"Ball"},{"id":16,"phrase":"Football"},{"id":17,"phrase":"Softball"}]
+	    arr = [
+            {"id" : 12, "phrase" : "Ball"},
+            {"id" : 16,"phrase" : "Football"},
+            {"id" : 17, "phrase" : "Softball"}
+        ]
 	    self.exampleList = json.dumps(arr)
 	    return {"exampleList" : self.exampleList}
     

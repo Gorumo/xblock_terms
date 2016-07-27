@@ -15,3 +15,18 @@ WHERE
 	?item wdt:P279 wd:Q246672 . 
 	SERVICE wikibase:label { bd:serviceParam wikibase:language "en" }
 }
+
+Если добавить * к wdt:P279* то ищутся все вложенные объекты.
+
+
+Поиск по первым буквам концепта
+
+SELECT DISTINCT ?item ?itemLabel WHERE {
+  ?item wdt:P279* wd:Q24034552.
+  FILTER(regex(?itemLabel, 'vector')) .
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
+  ?item rdfs:label ?itemLabel
+}
+
+
+

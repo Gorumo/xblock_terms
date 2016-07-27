@@ -8,7 +8,7 @@ from xblock.core import XBlock
 from xblock.fields import Scope, Integer, String
 from xblock.fragment import Fragment
 #from mysql.connector import errorcode
-from SPARQLWrapper import SPARQLWrapper, JSON
+from SPARQLWrapper import SPARQLWrapper, JSON, XML, N3, RDF
 import settings as s
 
 
@@ -60,22 +60,20 @@ class TermsXBlock(XBlock):
         self.arr.append(data.get('term'))
         sparql = SPARQLWrapper("https://query.wikidata.org/sparql")
         sparql.setQuery("""
-    PREFIX bd: <http://www.bigdata.com/rdf#> 
-PREFIX wikibase: <http://wikiba.se/ontology#> 
-PREFIX wd: <http://www.wikidata.org/entity/> 
-PREFIX wdt: <http://www.wikidata.org/prop/direct/>
-
-select (COUNT(?object) as ?count)
-where {
-        ?object wdt:P31 wd:Q13442814 .
-          
-
-      } """)
+            SELECT DISTINCT ?item ?itemLabel
+			WHERE
+			{
+				?item wdt:P279* wd:Q24034552 .
+			  	?item rdfs:label ?itemLabel
+			  	FILTER regex(?itemLabel, "^multi", "i")
+				SERVICE wikibase:label { bd:serviceParam wikibase:language "en" }	
+			}""")
         sparql.setReturnFormat(JSON)
         results = sparql.query().convert()
         
         for result in results["results"]["bindings"]:
-            self.arr.append(result)
+            self.arr.append(result["item"]["value"])
+            self.arr.append(result["itemLabel"]["value"])
         self.exampleList = json.dumps(self.arr) 
         return {"exampleList" : self.exampleList} 
 

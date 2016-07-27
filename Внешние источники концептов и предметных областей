@@ -16,7 +16,6 @@ WHERE
 	SERVICE wikibase:label { bd:serviceParam wikibase:language "en" }
 }
 
-<<<<<<< HEAD
 Если добавить * к wdt:P279* то ищутся все вложенные объекты.
 
 
@@ -31,15 +30,3 @@ SELECT DISTINCT ?item ?itemLabel WHERE {
 
 
 
-=======
-
-Запрос на все концепты и фильтр!
-SELECT DISTINCT ?item ?itemLabel
-WHERE
-{
-	?item wdt:P279* wd:Q246672 .
-  	?item rdfs:label ?itemLabel
-  	FILTER regex(?itemLabel, "^m", "i")
-	SERVICE wikibase:label { bd:serviceParam wikibase:language "en" }	
-}
->>>>>>> origin/master

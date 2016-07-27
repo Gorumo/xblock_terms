@@ -55,47 +55,49 @@ class TermsXBlock(XBlock):
         return frag
 
     # TO-DO: change this handler to perform your own actions.  You may need more
-    # than one handler, or you may not need any handlers at all. json.dumps
+    # than one handler, or you may not need any handlers at all.
     @XBlock.json_handler
     def termsListCheck(self, data, suffix=''):
         if self.exampleList != None:
             self.arr = json.loads(self.exampleList)
 
-        new_term = data.get('term')
-        new_id = data.get('id')
+        self.new_term = data.get('term')
+        self.new_id = data.get('id')
 
         cnx = mysql.connector.connect(**s.database)
         cursor = cnx.cursor()
-        #try:
-        cursor.execute("SELECT `id` FROM `allTerms` WHERE `name` = '"+new_term+"' ;")
-        data = cursor.fetchall() 
-        count = cursor.rowcount
-        if count == 0:
-            cursor.execute("INSERT INTO `allTerms` (`id`, `name`, `term`) VALUES (NULL, %s, %s)", (new_term, 'term_term'))
-            count = cursor.lastrowid
+
+        cursor.execute("SELECT `id` FROM `allTerms` WHERE `name` = "+self.new_term+";")
+        if cursor.rowcount == 0:
+            cursor.execute("INSERT INTO `allTerms` (`id`, `name`, `term`) VALUES (NULL, '"+self.new_term+"', 'test');")
             cnx.commit()
-            cursor.execute("INSERT INTO `relations` (`id`, `block`, `term`) VALUES (NULL, %s, %s)", (new_id, count))
+            cursor.execute("SELECT `id` FROM `allTerms` WHERE `name` = '"+self.new_term+"';")  
+            data = cursor.fetchall()
+            cursor.execute("INSERT INTO `relations` (`id`, `block`, `term`) VALUES (NULL, "+self.new_id+", "+self.data[0][0]+");")
+            cnx.commit()
         else:
-            term_id = data[0][0]
-            cursor.execute("SELECT `id` FROM `relations` WHERE `term` = %s AND `block` = %s ;" % (term_id, new_id))
-            cursor.fetchall()
-            if cursor.rowcount == 0:
-                cursor.execute("INSERT INTO `relations` (`id`, `block`, `term`) VALUES (NULL, %s, %s)", (new_id, term_id))
-            else:
-                new_id = 'Error'
-                new_term = 'Error'
+            cursor.execute("SELECT `id` FROM `allTerms` WHERE `name` = '"+self.new_term+"';")  
+            data = cursor.fetchall()
+            cursor.execute("SELECT `id` FROM `relations` WHERE `term` = "+data[0][0]+" AND `block` = '"+self.new_id+"';")
+            if cursor.rowcount != 0:
+                cursor.execute("INSERT INTO `relations` (`id`, `block`, `term`) VALUES (NULL, "+self.new_id+", "+self.data[0][0]+");")
+                cnx.commit()
+        cursor.execute("SELECT `id` FROM `allTerms` WHERE `name` = '"+self.new_term+"';")
+        data = cursor.fetchall()
+        self.exampleList = json.dumps(data)
+        cursor.execute("SELECT `id` FROM `allTerms` WHERE `name` = '"+self.new_term+"';")
+        data = cursor.fetchall()
+        self.test = json.dumps(data)
         cnx.commit()
-        cursor.close() 
+        cursor.close()
         cnx.close()
-        #except mysql.connector.Error as err:
-            #new_id = "Something went wrong: {}".format(err)
-        return {"exampleList" : new_term ,"test" : new_id}
+        return {"exampleList" : self.exampleList ,"test" : self.test} 
 
     # TO-DO: change this to create the scenarios you'd like to see in the
     # workbench while developing your XBlock. 
     @staticmethod
     def workbench_scenarios():
-        """A canned scenario for display in the workbench.""" 
+        """A canned scenario for display in the workbench."""
         return [
             ("TermsXBlock",
              """<terms/>

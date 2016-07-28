@@ -8,31 +8,16 @@ function TermsXBlock(runtime, element) {
     }
 
     var handlerUrl = runtime.handlerUrl(element, 'termsListCheck'); //increment_ount - привязываем данный "элемент" к скрипту increment_count и генерируем URL
-	
-	var autoUrl = runtime.handlerUrl(element, 'getTerms');
-	$( "#tags" ).autocomplete({
-    source: function (request, response) {
-        $.ajax({
-            type: "POST",
-            url: autoUrl,
-            data: JSON.stringify({ query: request.term }),
-            success: function (data) {
-                var transformed = $.map(data, function (el) {
-                    return {
-                        label: el.phrase,
-                        value: el.id
-                    };
-                });
-                alert(transformed);
-                response(transformed);
-            },
-            error: function () {
-                response([]);
-            }
+
+    var flowers = ["Астра", "Нарцисс", "Роза", "Пион", "Примула",
+                  "Подснежник", "Мак", "Первоцвет", "Петуния", "Фиалка"];
+   
+    $(function() {
+        $( "#term" ).autocomplete({
+           source: flowers
         });
-    }        
-	});
-    
+    });
+
     $('.halo', element).click(function(eventObject) {
         $.ajax({
             type: "POST",

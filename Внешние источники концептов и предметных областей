@@ -38,3 +38,44 @@ WHERE
 	SERVICE wikibase:label { bd:serviceParam wikibase:language "en" }	
 }
 
+********************DB Pedia****************
+
+
+Все типа Concept
+
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT DISTINCT ?film_title ?film_abstract 
+WHERE {
+?film_title rdf:type skos:Concept .
+?film_title rdfs:label ?film_abstract 
+} LIMIT 999999
+
+
+Все из раздела Field (типа области науки (физика, химия и тп))
+
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT DISTINCT ?field ?field_label 
+WHERE {
+?field dbo:field ?tmp .
+?tmp rdfs:label ?field_label 
+FILTER (langMatches(lang(?field_label),"en"))
+} LIMIT 999999
+
+
+!!!!!!Всего 4200 предметных областей (норм)!!!!!!!!
+
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT DISTINCT ?field ?field_label 
+WHERE {
+?tmp dbp:fields ?field .
+?field rdfs:label ?field_label 
+FILTER (langMatches(lang(?field_label),"en"))
+} LIMIT 999999
+
+
+
+
+

@@ -2,21 +2,18 @@ CREATE DATABASE IF NOT EXISTS `CCDB` /*!40100 DEFAULT CHARACTER SET latin1 */;
 USE `CCDB`;
 
 
--- --------------------------------------------------------
---CCDB - Content-Concept-DataBase
---
 -- Структура таблицы `Concepts`
 --
 
 CREATE TABLE IF NOT EXISTS `Concepts` (
   `concept_id` int(10) NOT NULL AUTO_INCREMENT,
-  `concept_URI` varchar(120) NOT NULL,
+  `concept_URI` varchar(120) CHARACTER SET latin1 NOT NULL,
   `field_id` int(10) NOT NULL,
-  `concept_label` varchar(120) NOT NULL,
-  `concept_description` varchar(250) NOT NULL,
+  `concept_label` varchar(120) CHARACTER SET latin1 NOT NULL,
+  `concept_description` varchar(250) CHARACTER SET latin1 NOT NULL,
   PRIMARY KEY (`concept_id`),
-  KEY `field_id` (`field_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+  UNIQUE KEY `concept_id` (`concept_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -25,12 +22,12 @@ CREATE TABLE IF NOT EXISTS `Concepts` (
 --
 
 CREATE TABLE IF NOT EXISTS `Concept_Content_Manager` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `block_id` int(11) NOT NULL,
-  `concept_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `block_id` (`block_id`,`concept_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+  `id_m` int(10) NOT NULL AUTO_INCREMENT,
+  `block_id` int(10) NOT NULL DEFAULT '0',
+  `concept_id` int(10) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id_m`),
+  UNIQUE KEY `id_m` (`id_m`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -39,11 +36,9 @@ CREATE TABLE IF NOT EXISTS `Concept_Content_Manager` (
 --
 
 CREATE TABLE IF NOT EXISTS `Fields` (
-  `field_id` int(11) NOT NULL AUTO_INCREMENT,
-  `field_label` varchar(120) NOT NULL,
-  PRIMARY KEY (`field_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+  `field_id` int(10) NOT NULL AUTO_INCREMENT,
+  `field_label` varchar(120) CHARACTER SET latin1 NOT NULL,
+  PRIMARY KEY (`field_id`),
+  UNIQUE KEY `field_id` (`field_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

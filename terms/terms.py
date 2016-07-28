@@ -65,29 +65,29 @@ class TermsXBlock(XBlock):
         ]
 	    self.exampleList = json.dumps(arr)
 	    return {"exampleList" : self.exampleList}
-    
+	    
     @XBlock.json_handler
     def termsListCheck(self, data, suffix=''):
-	    #Get data from html fields
+        #Get data from html fields
         new_term = data.get('term')
-        new_id = data.get('id') #self.scope_ids.usage_id
-
+        new_id = data.get('id') 
+        field_id = 1
         cnx = mysql.connector.connect(**s.database)
         cursor = cnx.cursor()
-        cursor.execute("SELECT `id` FROM `allTerms` WHERE `name` = '"+new_term+"' ;")
+        cursor.execute("SELECT `concept_id` FROM `Concepts` WHERE `concept_label` = '"+new_term+"' ;")
         data = cursor.fetchall() 
         count = cursor.rowcount
         if count == 0:
-            cursor.execute("INSERT INTO `allTerms` (`id`, `name`, `term`) VALUES (NULL, %s, %s)", (new_term, 'term_term'))
+            cursor.execute("INSERT INTO `Concepts` (`concept_id`, `concept_URI`, `field_id`, `concept_label`, `concept_description`) VALUES (NULL, %s, %s, %s, %s)", ('URI', field_id, new_term,'Description of concept'))
             count = cursor.lastrowid
             cnx.commit()
-            cursor.execute("INSERT INTO `relations` (`id`, `block`, `term`) VALUES (NULL, %s, %s)", (new_id, count))
+            cursor.execute("INSERT INTO `Concept_Content_Manager` (`id_m`, `block_id`, `concept_id`) VALUES (NULL, %s, %s)", (new_id, count))
         else:
             term_id = data[0][0]
-            cursor.execute("SELECT `id` FROM `relations` WHERE `term` = %s AND `block` = %s ;" % (term_id, new_id))
+            cursor.execute("SELECT `id_m` FROM `Concept_Content_Manager` WHERE `concept_id` = %s AND `block_id` = %s ;" % (term_id, new_id))
             cursor.fetchall()
             if cursor.rowcount == 0:
-                cursor.execute("INSERT INTO `relations` (`id`, `block`, `term`) VALUES (NULL, %s, %s)", (new_id, term_id))
+                cursor.execute("INSERT INTO `Concept_Content_Manager` (`id_m`, `block_id`, `concept_id`) VALUES (NULL, %s, %s)", (new_id, term_id))
             else:
                 new_id = 'Error'
                 new_term = 'Error'

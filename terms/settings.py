@@ -2,6 +2,6 @@ database = {
 	'user': 'root',
   	'password': '',
   	'host': 'localhost',
-  	'database': 'terms',
+  	'database': 'CCDB',
   	'raise_on_warnings': True,
 }

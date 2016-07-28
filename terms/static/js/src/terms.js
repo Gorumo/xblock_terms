@@ -9,8 +9,6 @@ function TermsXBlock(runtime, element) {
 
     var handlerUrl = runtime.handlerUrl(element, 'termsListCheck'); //increment_ount - привязываем данный "элемент" к скрипту increment_count и генерируем URL
 	
-	
-	
 	var autoUrl = runtime.handlerUrl(element, 'getTerms');
 	$( "#tags" ).autocomplete({
     source: function (request, response) {

@@ -75,6 +75,8 @@ WHERE {
 FILTER (langMatches(lang(?field_label),"en"))
 } LIMIT 999999
 
+Добавить для поиска по букве
+FILTER (regex(?field_label, '^G'))
 
 
 

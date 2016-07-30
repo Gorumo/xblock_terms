@@ -8,13 +8,26 @@ function TermsXBlock(runtime, element) {
     }
 
     var handlerUrl = runtime.handlerUrl(element, 'termsListCheck'); //increment_ount - привязываем данный "элемент" к скрипту increment_count и генерируем URL
-
-    var flowers = ["Астра", "Нарцисс", "Роза", "Пион", "Примула",
-                  "Подснежник", "Мак", "Первоцвет", "Петуния", "Фиалка"];
+    var autocompleteUrl = runtime.handlerUrl(element, 'termsListCheck');
    
     $(function() {
+        console.log("Here 1");
         $( "#term" ).autocomplete({
-           source: flowers
+           source: function( request, response ) {
+                console.log("Here 2");
+                $.ajax({
+                    type: "POST",
+                    url: autocompleteUrl,
+                    data: JSON.stringify({"term": document.getElementById("term").value}),
+                    success: function(res) {
+                        console.log("Here 3");
+                        alert(res);
+                        response(
+                            return res
+                        );
+                    }
+                });
+            }
         });
     });
 

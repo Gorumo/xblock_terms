@@ -57,7 +57,12 @@ class TermsXBlock(XBlock):
         return frag
 
     # TO-DO: change this handler to perform your own actions.  You may need more
-    # than one handler, or you may not need any handlers at all. json.dumps
+    # than one handler, or you may not need any handlers at all.
+	@XBlock.json_handler
+	def getTerms(self, data, suffix=''):
+		data = 5
+		return {"exampleList" : data}
+
     @XBlock.json_handler
     def termsListCheck(self, data, suffix=''):
         if self.exampleList != None:

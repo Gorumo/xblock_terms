@@ -8,6 +8,11 @@ function TermsXBlock(runtime, element) {
     }
 
     var handlerUrl = runtime.handlerUrl(element, 'termsListCheck'); //increment_ount - привязываем данный "элемент" к скрипту increment_count и генерируем URL
+    
+    /*
+     *
+     *	Was terminated
+     *
     var autocompleteUrl = runtime.handlerUrl(element, 'termsListCheck');
    
     $(function() {
@@ -30,6 +35,7 @@ function TermsXBlock(runtime, element) {
             }
         });
     });
+    */
 
     $('.halo', element).click(function(eventObject) {
         $.ajax({

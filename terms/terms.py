@@ -1,5 +1,6 @@
 """TO-DO: Write a description of what this XBlock is."""
 import json
+import pymongo
 import pkg_resources
 import datetime
 import mysql.connector
@@ -8,6 +9,7 @@ from xblock.core import XBlock
 from xblock.fields import Scope, Integer, String
 from xblock.fragment import Fragment
 from mysql.connector import errorcode
+from pymongo import Connection
 import settings as s
 
 
@@ -20,6 +22,10 @@ class TermsXBlock(XBlock):
 
     # TO-DO: delete count, and define your own fields.  
     #big dick 
+    
+    connection = Connection()
+    db = connection.edxapp
+    collection = db['modulestore.structures']
     
     arr = []
     overall = []

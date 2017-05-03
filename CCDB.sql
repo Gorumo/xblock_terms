@@ -1,3 +1,5 @@
+-- mysql -u root -p CCDB < CCDB.sql
+
 CREATE DATABASE IF NOT EXISTS `CCDB` /*!40100 DEFAULT CHARACTER SET latin1 */;
 USE `CCDB`;
 
